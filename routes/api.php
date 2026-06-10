@@ -6,12 +6,10 @@ use App\Http\Controllers\CargoController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\FuncionCargoController;
 
+/*endpoint */
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
-
-/* estos son los endpoint */
-
 Route::apiResource('cargos', CargoController::class);
 Route::apiResource('empleados', EmpleadoController::class);
 Route::apiResource('funciones-cargo', FuncionCargoController::class)->parameters([
