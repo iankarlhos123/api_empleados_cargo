@@ -12,7 +12,7 @@ Antes de clonar el repositorio verifica que tienes instalado:
 - Composer
 - MySQL
 
-Ejecuta los siguientes comandos en tu terminal (CMD, PowerShell o Git Bash) para verificar:
+Ejecuta los siguientes comandos en tu terminal (Git Bash) para verificar:
 
 
 php -v
