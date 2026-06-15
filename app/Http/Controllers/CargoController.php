@@ -14,21 +14,44 @@ class CargoController extends Controller
 
     public function store(Request $request)
     {
-        $cargo = Cargo::create($request->all());
+        $validated = $request->validate([
+            'nombre_cargo' => 'required|string|max:100|unique:cargos,nombre_cargo',
+            'descripcion'  => 'nullable|string',
+        ], [
+            'nombre_cargo.required' => 'El nombre del cargo es obligatorio.',
+            'nombre_cargo.max'      => 'El nombre del cargo no puede superar los 100 caracteres.',
+            'nombre_cargo.unique'   => 'Ya existe un cargo con ese nombre.',
+        ]);
 
-        return response()->json($cargo, 201);
+        $cargo = Cargo::create($validated);
+
+        return response()->json([
+            'message' => 'Cargo creado correctamente.',
+            'data'    => $cargo,
+        ], 201);
     }
 
     public function show(Cargo $cargo)
     {
-        return response()->json($cargo);
+        return response()->json($cargo->load('funciones'));
     }
 
     public function update(Request $request, Cargo $cargo)
     {
-        $cargo->update($request->all());
+        $validated = $request->validate([
+            'nombre_cargo' => 'sometimes|required|string|max:100|unique:cargos,nombre_cargo,' . $cargo->id_cargo . ',id_cargo',
+            'descripcion'  => 'nullable|string',
+        ], [
+            'nombre_cargo.required' => 'El nombre del cargo es obligatorio.',
+            'nombre_cargo.unique'   => 'Ya existe un cargo con ese nombre.',
+        ]);
 
-        return response()->json($cargo);
+        $cargo->update($validated);
+
+        return response()->json([
+            'message' => 'Cargo actualizado correctamente.',
+            'data'    => $cargo,
+        ]);
     }
 
     public function destroy(Cargo $cargo)
@@ -36,7 +59,7 @@ class CargoController extends Controller
         $cargo->delete();
 
         return response()->json([
-            'message' => 'Cargo eliminado correctamente'
+            'message' => 'Cargo eliminado correctamente.',
         ]);
     }
 }
