@@ -10,11 +10,11 @@ class EmpleadoSeeder extends Seeder
 {
     public function run(): void
     {
-        $ids = Cargo::all()->pluck('id_cargo')->shuffle()->take(30)->all();
+        $ids = Cargo::pluck('id_cargo')->toArray();
 
-        foreach ($ids as $id_cargo) {
+        for ($i = 0; $i < 30; $i++) {
             Empleado::factory()->create([
-                'id_cargo' => $id_cargo,
+                'id_cargo' => $ids[array_rand($ids)],
             ]);
         }
     }
