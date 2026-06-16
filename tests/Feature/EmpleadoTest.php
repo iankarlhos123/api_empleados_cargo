@@ -3,9 +3,14 @@
 
 use App\Models\Cargo;
 use App\Models\Empleado;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
+
+beforeEach(function () {
+    $this->user = User::factory()->create();
+});
 
 test('puede crear un empleado', function () {
 
@@ -14,7 +19,7 @@ test('puede crear un empleado', function () {
         'descripcion' => 'Desarrolla software',
     ]);
 
-    $response = $this->postJson('/api/empleados', [
+    $response = $this->actingAs($this->user)->postJson('/api/empleados', [
         'nombres' => 'ian',
         'apellidos' => 'solano',
         'fecha_nacimiento' => '2000-05-10',
@@ -70,7 +75,7 @@ test('puede actualizar un empleado', function () {
         'id_cargo' => $cargo->id_cargo,
     ]);
 
-    $response = $this->putJson("/api/empleados/{$empleado->id_empleado}", [
+    $response = $this->actingAs($this->user)->putJson("/api/empleados/{$empleado->id_empleado}", [
         'nombres' => 'Juan',
         'apellidos' => 'Perez',
         'estado' => false,
@@ -100,7 +105,7 @@ test('puede eliminar un empleado', function () {
         'id_cargo' => $cargo->id_cargo,
     ]);
 
-    $response = $this->deleteJson(
+    $response = $this->actingAs($this->user)->deleteJson(
         "/api/empleados/{$empleado->id_empleado}"
     );
 

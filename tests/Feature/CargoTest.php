@@ -1,13 +1,18 @@
 <?php
 
 use App\Models\Cargo;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
+beforeEach(function () {
+    $this->user = User::factory()->create();
+});
+
 test('puede crear un cargo', function () {
 
-    $response = $this->postJson('/api/cargos', [
+    $response = $this->actingAs($this->user)->postJson('/api/cargos', [
         'nombre_cargo' => 'Programador',
         'descripcion' => 'Desarrolla software',
     ]);
@@ -43,7 +48,7 @@ test('puede actualizar un cargo', function () {
         'descripcion' => 'Desarrolla software',
     ]);
 
-    $response = $this->putJson("/api/cargos/{$cargo->id_cargo}", [
+    $response = $this->actingAs($this->user)->putJson("/api/cargos/{$cargo->id_cargo}", [
         'nombre_cargo' => 'Analista',
         'descripcion' => 'Analiza sistemas',
     ]);
@@ -63,7 +68,7 @@ test('puede eliminar un cargo', function () {
         'descripcion' => 'Desarrolla software',
     ]);
 
-    $response = $this->deleteJson(
+    $response = $this->actingAs($this->user)->deleteJson(
         "/api/cargos/{$cargo->id_cargo}"
     );
 

@@ -2,9 +2,14 @@
 
 use App\Models\Cargo;
 use App\Models\FuncionCargo;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
+
+beforeEach(function () {
+    $this->user = User::factory()->create();
+});
 
 test('puede crear una funcion de cargo', function () {
 
@@ -13,7 +18,7 @@ test('puede crear una funcion de cargo', function () {
         'descripcion' => 'Desarrolla software',
     ]);
 
-    $response = $this->postJson('/api/funciones-cargo', [
+    $response = $this->actingAs($this->user)->postJson('/api/funciones-cargo', [
         'descripcion_funcion' => 'Desarrollar aplicaciones',
         'estado' => true,
         'id_cargo' => $cargo->id_cargo,
@@ -62,7 +67,7 @@ test('puede actualizar una funcion de cargo', function () {
         'id_cargo' => $cargo->id_cargo,
     ]);
 
-    $response = $this->putJson("/api/funciones-cargo/{$funcion->id_funcion}", [
+    $response = $this->actingAs($this->user)->putJson("/api/funciones-cargo/{$funcion->id_funcion}", [
         'descripcion_funcion' => 'Desarrollar sistemas',
         'estado' => false,
         'id_cargo' => $cargo->id_cargo,
@@ -89,7 +94,7 @@ test('puede eliminar una funcion de cargo', function () {
         'id_cargo' => $cargo->id_cargo,
     ]);
 
-    $response = $this->deleteJson(
+    $response = $this->actingAs($this->user)->deleteJson(
         "/api/funciones-cargo/{$funcion->id_funcion}"
     );
 
