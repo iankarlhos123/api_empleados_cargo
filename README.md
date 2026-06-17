@@ -12,7 +12,7 @@ Antes de clonar el repositorio verifica que tienes instalado:
 - Composer
 - MySQL
 
-Ejecuta los siguientes comandos en tu terminal (Git Bash) para verificar:
+Ejecuta los siguientes comandos en tu terminal para verificar:
 
 ```bash
 php -v
@@ -58,7 +58,7 @@ Abre el archivo `.env` en tu editor de código y edita los siguientes campos con
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=db_empleados
+DB_DATABASE=db_3066552
 DB_USERNAME=root
 DB_PASSWORD=1234
 ```
@@ -76,7 +76,7 @@ php artisan key:generate
 Ingresa a MySQL y ejecuta:
 
 ```sql
-CREATE DATABASE db_empleados;
+CREATE DATABASE db_3066552;
 ```
 
 ### Ejecutar las migraciones
