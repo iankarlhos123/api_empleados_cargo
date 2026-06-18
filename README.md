@@ -42,6 +42,7 @@ Ejecuta cada comando por separado:
 ```bash
 composer install
 npm install
+npm run build
 ```
 
 ### Configurar el archivo de entorno
@@ -121,7 +122,33 @@ php artisan serve
 
 Antes de consumir cualquier endpoint protegido debes iniciar sesión para obtener tu token.
 
-Ejecuta el siguiente comando en Git Bash:
+### Registrar un nuevo usuario (opcional)
+
+Si quieres crear tu propio usuario en vez de usar el de prueba, puedes registrarte indicando nombre, correo y contraseña:
+
+```bash
+curl -X POST http://localhost:8000/api/register -H "Accept: application/json" -H "Content-Type: application/json" -d '{"name":"Goku Solano","email":"goku@example.com","password":"password123"}'
+```
+
+Recibirás una respuesta como esta:
+
+```json
+{
+  "message": "Usuario registrado correctamente.",
+  "token": "2|aBcDeFg...",
+  "user": {
+    "id": 2,
+    "name": "Goku Solano",
+    "email": "goku@example.com"
+  }
+}
+```
+
+Con este registro ya recibes tu token directamente, así que no necesitas hacer login después (aunque también puedes hacerlo más adelante con ese mismo usuario).
+
+### Iniciar sesión
+
+Si ya tienes un usuario (el de prueba creado por el seeder, o uno que registraste tú mismo), inicia sesión así:
 
 ```bash
 curl -X POST http://localhost:8000/api/login -H "Accept: application/json" -H "Content-Type: application/json" -d '{"email":"admin@example.com","password":"password"}'
@@ -144,10 +171,16 @@ Copia ese token. Lo usarás en todos los endpoints reemplazando `TU_TOKEN` por e
 curl -X GET http://localhost:8000/api/empleados -H "Authorization: Bearer TU_TOKEN"
 ```
 
-### Lista de cargos
+### Lista de cargos (incluye funciones por cargo)
 
 ```bash
 curl -X GET http://localhost:8000/api/cargos -H "Authorization: Bearer TU_TOKEN"
+```
+
+### Lista de todas las funciones
+
+```bash
+curl -X GET http://localhost:8000/api/funciones-cargo -H "Authorization: Bearer TU_TOKEN"
 ```
 
 ### Funciones por cargo
