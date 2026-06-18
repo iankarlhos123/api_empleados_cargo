@@ -42,7 +42,6 @@ Ejecuta cada comando por separado:
 ```bash
 composer install
 npm install
-npm run build
 ```
 
 ### Configurar el archivo de entorno
