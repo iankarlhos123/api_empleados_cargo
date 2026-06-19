@@ -1,9 +1,11 @@
 <?php
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -19,4 +21,32 @@ return Application::configure(basePath: dirname(__DIR__))
         $exceptions->shouldRenderJsonWhen(
             fn (Request $request) => $request->is('api/*'),
         );
+
+        $exceptions->render(function (NotFoundHttpException $e, Request $request) {
+            if (! $request->is('api/*')) {
+                return null;
+            }
+
+            $previous = $e->getPrevious();
+
+            if ($previous instanceof ModelNotFoundException) {
+                $modelName = class_basename($previous->getModel());
+
+                $nombres = [
+                    'Cargo' => 'El cargo',
+                    'Empleado' => 'El empleado',
+                    'FuncionCargo' => 'La función',
+                ];
+
+                $nombre = $nombres[$modelName] ?? 'El recurso';
+
+                return response()->json([
+                    'message' => "{$nombre} solicitado no existe.",
+                ], 404);
+            }
+
+            return response()->json([
+                'message' => 'El recurso solicitado no existe.',
+            ], 404);
+        });
     })->create();

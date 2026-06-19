@@ -21,8 +21,9 @@ return new class extends Migration
             $table->unsignedBigInteger('id_cargo');
 
             $table->foreign('id_cargo')
-                  ->references('id_cargo')
-                  ->on('cargos');
+                ->references('id_cargo')
+                ->on('cargos')
+                ->onDelete('cascade');
 
             $table->timestamps();
         });

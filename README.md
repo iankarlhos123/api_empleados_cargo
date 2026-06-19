@@ -169,7 +169,7 @@ Copia ese token. Lo usarás en todos los endpoints reemplazando `TU_TOKEN` por e
 curl -X GET http://localhost:8000/api/empleados -H "Authorization: Bearer TU_TOKEN"
 ```
 
-### Lista de cargos (incluye funciones por cargo)
+### Lista de cargos 
 
 ```bash
 curl -X GET http://localhost:8000/api/cargos -H "Authorization: Bearer TU_TOKEN"

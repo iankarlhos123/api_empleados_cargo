@@ -9,7 +9,7 @@ class EmpleadoController extends Controller
 {
     public function index()
     {
-        return response()->json(Empleado::with('cargo')->paginate(10));
+        return response()->json(Empleado::paginate(10));
     }
 
     public function store(Request $request)
