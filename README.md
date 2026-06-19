@@ -134,7 +134,6 @@ Recibirás una respuesta como esta:
 ```json
 {
   "message": "Usuario registrado correctamente.",
-  "token": "2|aBcDeFg...",
   "user": {
     "id": 2,
     "name": "Goku Solano",
@@ -143,7 +142,7 @@ Recibirás una respuesta como esta:
 }
 ```
 
-Con este registro ya recibes tu token directamente, así que no necesitas hacer login después (aunque también puedes hacerlo más adelante con ese mismo usuario).
+Con este registro el usuario es creado exitosamente, pero no se genera un token de forma automática. Deberás iniciar sesión a continuación para obtener tu token.
 
 ### Iniciar sesión
 
