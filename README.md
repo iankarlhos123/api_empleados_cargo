@@ -121,7 +121,7 @@ php artisan serve
 
 Antes de consumir cualquier endpoint protegido debes iniciar sesión para obtener tu token.
 
-### Registrar un nuevo usuario (opcional)
+### Registrar un nuevo usuario 
 
 Si quieres crear tu propio usuario en vez de usar el de prueba, puedes registrarte indicando nombre, correo y contraseña:
 
