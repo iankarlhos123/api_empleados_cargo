@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cargo;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class CargoController extends Controller
 {
@@ -16,7 +17,8 @@ class CargoController extends Controller
     {
         $validated = $request->validate([
             'nombre_cargo' => 'required|string|max:100|unique:cargos,nombre_cargo',
-            'descripcion' => 'nullable|string',
+            'salario_base' => 'nullable|numeric|min:0',
+            'estado' => ['sometimes', Rule::in(['activo', 'inactivo'])],
         ], [
             'nombre_cargo.required' => 'El nombre del cargo es obligatorio.',
             'nombre_cargo.max' => 'El nombre del cargo no puede superar los 100 caracteres.',
@@ -39,8 +41,9 @@ class CargoController extends Controller
     public function update(Request $request, Cargo $cargo)
     {
         $validated = $request->validate([
-            'nombre_cargo' => 'sometimes|required|string|max:100|unique:cargos,nombre_cargo,'.$cargo->id_cargo.',id_cargo',
-            'descripcion' => 'nullable|string',
+            'nombre_cargo' => 'sometimes|required|string|max:100|unique:cargos,nombre_cargo,'.$cargo->id,
+            'salario_base' => 'nullable|numeric|min:0',
+            'estado' => ['sometimes', Rule::in(['activo', 'inactivo'])],
         ], [
             'nombre_cargo.required' => 'El nombre del cargo es obligatorio.',
             'nombre_cargo.unique' => 'Ya existe un cargo con ese nombre.',

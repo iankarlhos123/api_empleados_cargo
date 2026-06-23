@@ -11,8 +11,6 @@ class FuncionCargo extends Model
 
     protected $table = 'funciones_cargo';
 
-    protected $primaryKey = 'id_funcion';
-
     protected $fillable = [
         'descripcion_funcion',
         'estado',
@@ -25,6 +23,6 @@ class FuncionCargo extends Model
 
     public function cargo()
     {
-        return $this->belongsTo(Cargo::class, 'id_cargo', 'id_cargo');
+        return $this->belongsTo(Cargo::class, 'id_cargo');
     }
 }

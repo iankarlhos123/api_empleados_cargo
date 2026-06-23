@@ -9,8 +9,6 @@ class Empleado extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'id_empleado';
-
     protected $fillable = [
         'nombres',
         'apellidos',
@@ -30,6 +28,6 @@ class Empleado extends Model
 
     public function cargo()
     {
-        return $this->belongsTo(Cargo::class, 'id_cargo', 'id_cargo');
+        return $this->belongsTo(Cargo::class, 'id_cargo');
     }
 }

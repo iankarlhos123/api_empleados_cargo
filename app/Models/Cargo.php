@@ -9,20 +9,19 @@ class Cargo extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'id_cargo';
-
     protected $fillable = [
         'nombre_cargo',
-        'descripcion',
+        'salario_base',
+        'estado',
     ];
 
     public function empleados()
     {
-        return $this->hasMany(Empleado::class, 'id_cargo', 'id_cargo');
+        return $this->hasMany(Empleado::class, 'id_cargo');
     }
 
     public function funciones()
     {
-        return $this->hasMany(FuncionCargo::class, 'id_cargo', 'id_cargo');
+        return $this->hasMany(FuncionCargo::class, 'id_cargo');
     }
 }

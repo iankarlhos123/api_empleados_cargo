@@ -15,13 +15,14 @@ test('puede crear una funcion de cargo', function () {
 
     $cargo = Cargo::create([
         'nombre_cargo' => 'Programador',
-        'descripcion' => 'Desarrolla software',
+        'salario_base' => 2500000,
+        'estado' => 'activo',
     ]);
 
     $response = $this->actingAs($this->user)->postJson('/api/funciones-cargo', [
         'descripcion_funcion' => 'Desarrollar aplicaciones',
         'estado' => true,
-        'id_cargo' => $cargo->id_cargo,
+        'id_cargo' => $cargo->id,
     ]);
 
     $response->assertStatus(201);
@@ -35,21 +36,22 @@ test('puede mostrar una funcion de cargo', function () {
 
     $cargo = Cargo::create([
         'nombre_cargo' => 'Programador',
-        'descripcion' => 'Desarrolla software',
+        'salario_base' => 2500000,
+        'estado' => 'activo',
     ]);
 
     $funcion = FuncionCargo::create([
         'descripcion_funcion' => 'Desarrollar aplicaciones',
         'estado' => true,
-        'id_cargo' => $cargo->id_cargo,
+        'id_cargo' => $cargo->id,
     ]);
 
-    $response = $this->getJson("/api/funciones-cargo/{$funcion->id_funcion}");
+    $response = $this->actingAs($this->user)->getJson("/api/funciones-cargo/{$funcion->id}");
 
     $response->assertStatus(200);
 
     $response->assertJson([
-        'id_funcion' => $funcion->id_funcion,
+        'id' => $funcion->id,
         'descripcion_funcion' => 'Desarrollar aplicaciones',
     ]);
 });
@@ -58,25 +60,26 @@ test('puede actualizar una funcion de cargo', function () {
 
     $cargo = Cargo::create([
         'nombre_cargo' => 'Programador',
-        'descripcion' => 'Desarrolla software',
+        'salario_base' => 2500000,
+        'estado' => 'activo',
     ]);
 
     $funcion = FuncionCargo::create([
         'descripcion_funcion' => 'Desarrollar aplicaciones',
         'estado' => true,
-        'id_cargo' => $cargo->id_cargo,
+        'id_cargo' => $cargo->id,
     ]);
 
-    $response = $this->actingAs($this->user)->putJson("/api/funciones-cargo/{$funcion->id_funcion}", [
+    $response = $this->actingAs($this->user)->putJson("/api/funciones-cargo/{$funcion->id}", [
         'descripcion_funcion' => 'Desarrollar sistemas',
         'estado' => false,
-        'id_cargo' => $cargo->id_cargo,
+        'id_cargo' => $cargo->id,
     ]);
 
     $response->assertStatus(200);
 
     $this->assertDatabaseHas('funciones_cargo', [
-        'id_funcion' => $funcion->id_funcion,
+        'id' => $funcion->id,
         'descripcion_funcion' => 'Desarrollar sistemas',
     ]);
 });
@@ -85,22 +88,23 @@ test('puede eliminar una funcion de cargo', function () {
 
     $cargo = Cargo::create([
         'nombre_cargo' => 'Programador',
-        'descripcion' => 'Desarrolla software',
+        'salario_base' => 2500000,
+        'estado' => 'activo',
     ]);
 
     $funcion = FuncionCargo::create([
         'descripcion_funcion' => 'Desarrollar aplicaciones',
         'estado' => true,
-        'id_cargo' => $cargo->id_cargo,
+        'id_cargo' => $cargo->id,
     ]);
 
     $response = $this->actingAs($this->user)->deleteJson(
-        "/api/funciones-cargo/{$funcion->id_funcion}"
+        "/api/funciones-cargo/{$funcion->id}"
     );
 
     $response->assertStatus(200);
 
     $this->assertDatabaseMissing('funciones_cargo', [
-        'id_funcion' => $funcion->id_funcion,
+        'id' => $funcion->id,
     ]);
 });

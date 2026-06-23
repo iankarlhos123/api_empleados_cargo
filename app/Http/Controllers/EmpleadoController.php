@@ -21,7 +21,7 @@ class EmpleadoController extends Controller
             'fecha_ingreso' => 'nullable|date',
             'salario' => 'nullable|numeric|min:0',
             'estado' => 'boolean',
-            'id_cargo' => 'required|exists:cargos,id_cargo',
+            'id_cargo' => 'required|exists:cargos,id',
         ], [
             'nombres.required' => 'El nombre del empleado es obligatorio.',
             'apellidos.required' => 'Los apellidos del empleado son obligatorios.',
@@ -45,7 +45,7 @@ class EmpleadoController extends Controller
         $empleado->load(['cargo.funciones']);
 
         return response()->json([
-            'id_empleado' => $empleado->id_empleado,
+            'id' => $empleado->id,
             'nombres' => $empleado->nombres,
             'apellidos' => $empleado->apellidos,
             'salario' => $empleado->salario,
@@ -53,9 +53,10 @@ class EmpleadoController extends Controller
             'fecha_nacimiento' => $empleado->fecha_nacimiento,
             'fecha_ingreso' => $empleado->fecha_ingreso,
             'cargo' => [
-                'id_cargo' => $empleado->cargo->id_cargo,
+                'id' => $empleado->cargo->id,
                 'nombre_cargo' => $empleado->cargo->nombre_cargo,
-                'descripcion' => $empleado->cargo->descripcion,
+                'salario_base' => $empleado->cargo->salario_base,
+                'estado' => $empleado->cargo->estado,
                 'funciones' => $empleado->cargo->funciones,
             ],
         ]);
@@ -70,7 +71,7 @@ class EmpleadoController extends Controller
             'fecha_ingreso' => 'nullable|date',
             'salario' => 'nullable|numeric|min:0',
             'estado' => 'boolean',
-            'id_cargo' => 'sometimes|required|exists:cargos,id_cargo',
+            'id_cargo' => 'sometimes|required|exists:cargos,id',
         ], [
             'nombres.required' => 'El nombre del empleado es obligatorio.',
             'apellidos.required' => 'Los apellidos del empleado son obligatorios.',

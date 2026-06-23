@@ -10,7 +10,7 @@ class EmpleadoSeeder extends Seeder
 {
     public function run(): void
     {
-        $ids = Cargo::pluck('id_cargo')->toArray();
+        $ids = Cargo::pluck('id')->toArray();
 
         for ($i = 0; $i < 30; $i++) {
             Empleado::factory()->create([

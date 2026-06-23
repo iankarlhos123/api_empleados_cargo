@@ -184,7 +184,8 @@ class CargoFactory extends Factory
 
         return [
             'nombre_cargo' => $cargo['nombre'],
-            'descripcion' => $cargo['descripcion'],
+            'salario_base' => $this->faker->randomFloat(2, 1000000, 5000000),
+            'estado' => 'activo',
         ];
     }
 }

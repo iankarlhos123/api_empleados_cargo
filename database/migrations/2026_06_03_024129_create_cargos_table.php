@@ -12,9 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('cargos', function (Blueprint $table) {
-            $table->id('id_cargo');
+            $table->id();
             $table->string('nombre_cargo', 100);
-            $table->text('descripcion')->nullable();
+            $table->decimal('salario_base', 10, 2)->nullable();
+            $table->string('estado')->default('activo');
             $table->timestamps();
         });
     }

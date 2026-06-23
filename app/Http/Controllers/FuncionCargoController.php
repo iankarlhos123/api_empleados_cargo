@@ -28,7 +28,7 @@ class FuncionCargoController extends Controller
         $validated = $request->validate([
             'descripcion_funcion' => 'required|string|max:500',
             'estado' => 'boolean',
-            'id_cargo' => 'required|exists:cargos,id_cargo',
+            'id_cargo' => 'required|exists:cargos,id',
         ], [
             'descripcion_funcion.required' => 'La descripción de la función es obligatoria.',
             'descripcion_funcion.max' => 'La descripción no puede superar los 500 caracteres.',
@@ -54,7 +54,7 @@ class FuncionCargoController extends Controller
         $validated = $request->validate([
             'descripcion_funcion' => 'sometimes|required|string|max:500',
             'estado' => 'boolean',
-            'id_cargo' => 'sometimes|required|exists:cargos,id_cargo',
+            'id_cargo' => 'sometimes|required|exists:cargos,id',
         ], [
             'descripcion_funcion.required' => 'La descripción de la función es obligatoria.',
             'descripcion_funcion.max' => 'La descripción no puede superar los 500 caracteres.',

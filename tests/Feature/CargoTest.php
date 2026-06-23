@@ -14,7 +14,8 @@ test('puede crear un cargo', function () {
 
     $response = $this->actingAs($this->user)->postJson('/api/cargos', [
         'nombre_cargo' => 'Programador',
-        'descripcion' => 'Desarrolla software',
+        'salario_base' => 2500000,
+        'estado' => 'activo',
     ]);
 
     $response->assertStatus(201);
@@ -28,15 +29,16 @@ test('puede mostrar un cargo', function () {
 
     $cargo = Cargo::create([
         'nombre_cargo' => 'Programador',
-        'descripcion' => 'Desarrolla software',
+        'salario_base' => 2500000,
+        'estado' => 'activo',
     ]);
 
-    $response = $this->getJson("/api/cargos/{$cargo->id_cargo}");
+    $response = $this->actingAs($this->user)->getJson("/api/cargos/{$cargo->id}");
 
     $response->assertStatus(200);
 
     $response->assertJson([
-        'id_cargo' => $cargo->id_cargo,
+        'id' => $cargo->id,
         'nombre_cargo' => 'Programador',
     ]);
 });
@@ -45,18 +47,20 @@ test('puede actualizar un cargo', function () {
 
     $cargo = Cargo::create([
         'nombre_cargo' => 'Programador',
-        'descripcion' => 'Desarrolla software',
+        'salario_base' => 2500000,
+        'estado' => 'activo',
     ]);
 
-    $response = $this->actingAs($this->user)->putJson("/api/cargos/{$cargo->id_cargo}", [
+    $response = $this->actingAs($this->user)->putJson("/api/cargos/{$cargo->id}", [
         'nombre_cargo' => 'Analista',
-        'descripcion' => 'Analiza sistemas',
+        'salario_base' => 3000000,
+        'estado' => 'activo',
     ]);
 
     $response->assertStatus(200);
 
     $this->assertDatabaseHas('cargos', [
-        'id_cargo' => $cargo->id_cargo,
+        'id' => $cargo->id,
         'nombre_cargo' => 'Analista',
     ]);
 });
@@ -65,16 +69,17 @@ test('puede eliminar un cargo', function () {
 
     $cargo = Cargo::create([
         'nombre_cargo' => 'Programador',
-        'descripcion' => 'Desarrolla software',
+        'salario_base' => 2500000,
+        'estado' => 'activo',
     ]);
 
     $response = $this->actingAs($this->user)->deleteJson(
-        "/api/cargos/{$cargo->id_cargo}"
+        "/api/cargos/{$cargo->id}"
     );
 
     $response->assertStatus(200);
 
     $this->assertDatabaseMissing('cargos', [
-        'id_cargo' => $cargo->id_cargo,
+        'id' => $cargo->id,
     ]);
 });

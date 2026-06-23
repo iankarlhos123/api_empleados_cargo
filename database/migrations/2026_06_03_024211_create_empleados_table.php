@@ -12,26 +12,26 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('empleados', function (Blueprint $table) {
-             $table->id('id_empleado');
+            $table->id();
 
-             $table->string('nombres');
-             $table->string('apellidos');
+            $table->string('nombres');
+            $table->string('apellidos');
 
-             $table->date('fecha_nacimiento')->nullable();
-             $table->date('fecha_ingreso')->nullable();
+            $table->date('fecha_nacimiento')->nullable();
+            $table->date('fecha_ingreso')->nullable();
 
-             $table->decimal('salario', 10, 2)->nullable();
+            $table->decimal('salario', 10, 2)->nullable();
 
-             $table->boolean('estado')->default(true);
+            $table->boolean('estado')->default(true);
 
-             $table->unsignedBigInteger('id_cargo');
+            $table->unsignedBigInteger('id_cargo');
 
             $table->foreign('id_cargo')
-               ->references('id_cargo')
-               ->on('cargos')
-               ->onDelete('cascade');
+                ->references('id')
+                ->on('cargos')
+                ->onDelete('cascade');
 
-             $table->timestamps();
+            $table->timestamps();
         });
     }
 

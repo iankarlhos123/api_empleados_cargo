@@ -12,7 +12,7 @@ class FuncionCargoSeeder extends Seeder
     {
         foreach (Cargo::all() as $cargo) {
             FuncionCargo::factory(5)->create([
-                'id_cargo' => $cargo->id_cargo,
+                'id_cargo' => $cargo->id,
             ]);
         }
     }
