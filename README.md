@@ -181,6 +181,21 @@ curl -X GET http://localhost:8000/api/cargos -H "Authorization: Bearer TU_TOKEN"
 curl -X GET http://localhost:8000/api/funciones-cargo -H "Authorization: Bearer TU_TOKEN"
 ```
 
+### Cambiar de pagina en la paginacion
+
+Los listados paginados muestran 10 registros por pagina. Para consultar otra pagina, agrega el parametro `page` a la URL:
+
+```bash
+curl -X GET "http://localhost:8000/api/empleados?page=2" -H "Authorization: Bearer TU_TOKEN"
+```
+
+Tambien puedes usarlo en los demas listados:
+
+```bash
+curl -X GET "http://localhost:8000/api/cargos?page=2" -H "Authorization: Bearer TU_TOKEN"
+curl -X GET "http://localhost:8000/api/funciones-cargo?page=2" -H "Authorization: Bearer TU_TOKEN"
+```
+
 ### Funciones por cargo
 
 ```bash
