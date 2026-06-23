@@ -2,6 +2,7 @@
 
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
 
 uses(RefreshDatabase::class);
 
@@ -45,6 +46,37 @@ test('un usuario puede hacer login y obtiene un token', function () {
             'message',
             'token',
         ]);
+});
+
+test('un nuevo login invalida los tokens anteriores del usuario', function () {
+    User::factory()->create([
+        'email' => 'test@example.com',
+        'password' => bcrypt('password123'),
+    ]);
+
+    $firstToken = $this->postJson('/api/login', [
+        'email' => 'test@example.com',
+        'password' => 'password123',
+    ])->json('token');
+
+    $secondToken = $this->postJson('/api/login', [
+        'email' => 'test@example.com',
+        'password' => 'password123',
+    ])->json('token');
+
+    Auth::guard('web')->logout();
+
+    expect($firstToken)->not->toBe($secondToken);
+
+    $this->withHeaders([
+        'Authorization' => "Bearer {$firstToken}",
+    ])->getJson('/api/empleados')->assertUnauthorized();
+
+    $this->withHeaders([
+        'Authorization' => "Bearer {$secondToken}",
+    ])->getJson('/api/empleados')->assertSuccessful();
+
+    $this->assertDatabaseCount('personal_access_tokens', 1);
 });
 
 test('un usuario puede hacer logout', function () {
