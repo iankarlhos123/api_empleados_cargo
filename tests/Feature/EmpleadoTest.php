@@ -38,6 +38,28 @@ test('puede crear un empleado', function () {
     ]);
 });
 
+test('no puede crear un empleado con salario cero', function () {
+
+    $cargo = Cargo::create([
+        'nombre_cargo' => 'Programador',
+        'salario_base' => 2500000,
+        'estado' => 'activo',
+    ]);
+
+    $response = $this->actingAs($this->user)->postJson('/api/empleados', [
+        'nombres' => 'ian',
+        'apellidos' => 'solano',
+        'fecha_nacimiento' => '2000-05-10',
+        'fecha_ingreso' => '2026-06-04',
+        'salario' => 0,
+        'estado' => true,
+        'id_cargo' => $cargo->id,
+    ]);
+
+    $response->assertUnprocessable()
+        ->assertJsonValidationErrors('salario');
+});
+
 test('puede mostrar un empleado', function () {
 
     $cargo = Cargo::create([
@@ -92,6 +114,30 @@ test('puede actualizar un empleado', function () {
         'nombres' => 'Juan',
         'apellidos' => 'Perez',
     ]);
+});
+
+test('no puede actualizar un empleado con salario cero', function () {
+
+    $cargo = Cargo::create([
+        'nombre_cargo' => 'Programador',
+        'salario_base' => 2500000,
+        'estado' => 'activo',
+    ]);
+
+    $empleado = Empleado::create([
+        'nombres' => 'juan',
+        'apellidos' => 'solano',
+        'salario' => 250000,
+        'estado' => true,
+        'id_cargo' => $cargo->id,
+    ]);
+
+    $response = $this->actingAs($this->user)->putJson("/api/empleados/{$empleado->id}", [
+        'salario' => 0,
+    ]);
+
+    $response->assertUnprocessable()
+        ->assertJsonValidationErrors('salario');
 });
 
 test('puede eliminar un empleado', function () {

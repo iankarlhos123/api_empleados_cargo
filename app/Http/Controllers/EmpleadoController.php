@@ -19,7 +19,7 @@ class EmpleadoController extends Controller
             'apellidos' => 'required|string|max:255',
             'fecha_nacimiento' => 'nullable|date|before:today',
             'fecha_ingreso' => 'nullable|date',
-            'salario' => 'nullable|numeric|min:0',
+            'salario' => 'nullable|numeric|gt:0',
             'estado' => 'boolean',
             'id_cargo' => 'required|exists:cargos,id',
         ], [
@@ -27,7 +27,7 @@ class EmpleadoController extends Controller
             'apellidos.required' => 'Los apellidos del empleado son obligatorios.',
             'fecha_nacimiento.before' => 'La fecha de nacimiento debe ser anterior a hoy.',
             'salario.numeric' => 'El salario debe ser un numero.',
-            'salario.min' => 'El salario no puede ser negativo.',
+            'salario.gt' => 'El salario debe ser mayor que cero.',
             'id_cargo.required' => 'Debe asignar un cargo al empleado.',
             'id_cargo.exists' => 'El cargo seleccionado no existe.',
         ]);
@@ -69,14 +69,14 @@ class EmpleadoController extends Controller
             'apellidos' => 'sometimes|required|string|max:255',
             'fecha_nacimiento' => 'nullable|date|before:today',
             'fecha_ingreso' => 'nullable|date',
-            'salario' => 'nullable|numeric|min:0',
+            'salario' => 'nullable|numeric|gt:0',
             'estado' => 'boolean',
             'id_cargo' => 'sometimes|required|exists:cargos,id',
         ], [
             'nombres.required' => 'El nombre del empleado es obligatorio.',
             'apellidos.required' => 'Los apellidos del empleado son obligatorios.',
             'salario.numeric' => 'El salario debe ser un numero.',
-            'salario.min' => 'El salario no puede ser negativo.',
+            'salario.gt' => 'El salario debe ser mayor que cero.',
             'id_cargo.exists' => 'El cargo seleccionado no existe.',
         ]);
 
